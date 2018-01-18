@@ -42,7 +42,6 @@ export const actions = {
     if (process.browser) {
       // ...Browser
       if (token) {
-        console.log('Token: ', token)
         Cookies.set('ccmsToken', token, { expires: 1 })
       } else {
         Cookies.remove('ccmsToken')

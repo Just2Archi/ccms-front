@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>{{ $route.name }}</h1>
     <v-card class="card--flex-toolbar">
       <v-toolbar card prominent>
         <v-text-field
@@ -47,7 +46,7 @@
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
         <v-card-title>
-          <span>Ar tikrai norite ištrinti?</span>
+          <span>Ar tikrai norite ištrinti { title of the post }?</span>
         </v-card-title>
         <v-card-actions>
           <v-btn color="error" flat @click.stop="dialogDelete = false">Ištrinti</v-btn>
