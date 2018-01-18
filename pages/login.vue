@@ -51,8 +51,8 @@ export default {
   },
   methods: {
     async login () {
-      this.loading = true
       if (this.$refs.loginForm.validate()) {
+        this.loading = true
         try {
           await this.$store.dispatch('login', {
             fields: {

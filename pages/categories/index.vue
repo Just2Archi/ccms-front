@@ -6,11 +6,18 @@
       <v-btn class="error" raised>Atšaukti</v-btn>
       <v-btn class="primary" raised>Išsaugoti</v-btn>
     </v-toolbar>
-    <Draggable v-model="listA" :options="sortOptions" @start="drag=true" @end="drag=false">
-       <v-card v-for="element in listA" :key="element.id" :class="element.class">
-         <v-card-title><strong>{{element.name}}</strong></v-card-title>
-       </v-card>
-    </Draggable>
+    <v-card>
+      <v-card-text>
+        <Draggable :disabled="true" v-model="listA" :options="sortOptions" @start="drag=true" @end="drag=false">
+           <v-card v-for="element in listA" :key="element.id" :class="element.class">
+             <v-card-title><strong>{{element.name}}</strong></v-card-title>
+           </v-card>
+        </Draggable>
+      </v-card-text>
+    </v-card>
+    <div>
+      Order: <span v-for="item in listA">{{ item.name }}, </span>
+    </div>
   </div>
 </template>
 
@@ -19,6 +26,7 @@ const Draggable = require('vuedraggable')
 export default {
   data () {
     return {
+      drag: false,
       sortOptions: {
         group: 'sample',
         animation: 150
@@ -37,7 +45,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .card {
   cursor: move;
 }

@@ -2,12 +2,12 @@
   <v-app light>
     <v-navigation-drawer :mini-variant.sync="miniVariant" v-model="drawer" fixed app>
       <v-list>
-        <v-list-tile router to="/blocks">
+        <v-list-tile router to="/categories">
           <v-list-tile-action>
             <v-icon>apps</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Blokai</v-list-tile-title>
+            <v-list-tile-title>Kategorijos</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile router to="/posts">
@@ -49,10 +49,16 @@
       <v-toolbar-title>ClimateCMS</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu bottom center offset-y>
-        <v-avatar slot="activator" class="black">
-          <span class="white--text headline" v-if="userLetter">{{ userLetter }}</span>
+        <v-avatar slot="activator" class="primary">
+          <span class="white--text headline" v-if="user">{{ user.username.charAt(0).toUpperCase() }}</span>
         </v-avatar>
         <v-list>
+          <v-list-tile>
+            <v-list-tile-title>Profilis</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile v-if="user && user.admin">
+            <v-list-tile-title>Administravimas</v-list-tile-title>
+          </v-list-tile>
           <v-list-tile @click="logout()">
             <v-list-tile-title>Atsijungti</v-list-tile-title>
           </v-list-tile>
@@ -86,9 +92,9 @@
       }
     },
     computed: {
-      userLetter () {
+      user () {
         if (this.$store.getters['loggedIn']) {
-          return this.$store.state.user[0] ? this.$store.state.user[0].username.charAt(0).toUpperCase() : ''
+          return this.$store.state.user[0] ? this.$store.state.user[0] : null
         }
       }
     }

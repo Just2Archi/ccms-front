@@ -29,12 +29,12 @@
             <td>{{ props.item.title }}</td>
             <td>{{ props.item.block }}</td>
             <td>{{ props.item.date }}</td>
-            <td class="text-xs-right">
+            <td class="text-xs-center">
               <v-btn @click.stop="dialogEdit = true" color="primary" flat icon>
                 <v-icon>edit</v-icon>
               </v-btn>
             </td>
-            <td class="text-xs-right">
+            <td class="text-xs-center">
               <v-btn @click.stop="dialogDelete = true" color="error"flat icon>
                 <v-icon>delete</v-icon>
               </v-btn>
@@ -62,7 +62,7 @@
       scrollable
     >
       <v-card>
-          <v-toolbar style="flex: 0 0 auto;" dark class="primary">
+        <v-toolbar style="flex: 0 0 auto;" dark class="primary">
           <v-btn icon @click.native="dialogEdit = false" dark>
             <v-icon>close</v-icon>
           </v-btn>
@@ -72,11 +72,6 @@
             <v-btn dark flat @click.native="dialogEdit = false">Išsaugoti</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-card-text>
-        <v-divider></v-divider>
-        </v-card-text>
-
-          <div style="flex: 1 1 auto;"></div>
       </v-card>
     </v-dialog>
   </div>
@@ -100,8 +95,8 @@ export default {
         { text: 'Pavadinimas', value: 'title', align: 'left' },
         { text: 'Kategorija', value: 'block', align: 'left' },
         { text: 'Data', value: 'date', align: 'left' },
-        { sortable: false },
-        { sortable: false }
+        { text: 'Redaguoti', sortable: false, align: 'center' },
+        { text: 'Ištrinti', sortable: false, align: 'center' }
       ],
       posts: [
         {

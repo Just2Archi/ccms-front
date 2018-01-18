@@ -83,7 +83,7 @@ export const actions = {
   },
 
   // Fetch
-  async fetch ({ getters, state, commit, dispatch }, { endpoint = 'http://192.168.19.223:8000/api/users' } = {}) {
+  async fetch ({ getters, state, commit, dispatch }, { endpoint = 'http://localhost:8000/api/users' } = {}) {
     // Fetch and update latest token
     await dispatch('fetchToken')
     // Skip if there is no token set
@@ -94,6 +94,11 @@ export const actions = {
     // Try to get user profile
     try {
       const data = await this.$axios.$get(endpoint)
+      console.log(data)
+      if (data.success && data.success === false) {
+        console.log(data.message)
+        throw new Error(data.message)
+      }
       commit('setUser', data)
     } catch (e) {
       console.error(e)
@@ -103,7 +108,7 @@ export const actions = {
   },
 
   // Login
-  async login ({ dispatch }, { fields, endpoint = 'http://192.168.19.223:8000/api/login' } = {}) {
+  async login ({ dispatch }, { fields, endpoint = 'http://localhost:8000/api/login' } = {}) {
     try {
       // Send credentials to API
       let data = await this.$axios.$post(endpoint, fields)
