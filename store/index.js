@@ -2,7 +2,7 @@ import Cookie from 'cookie'
 import Cookies from 'js-cookie'
 
 export const state = () => ({
-  sidebar: false,
+  sidebar: true,
   token: null,
   user: null
 })
@@ -56,7 +56,6 @@ export const actions = {
         let date = new Date()
         expires = date.setDate(date.getDate() + 1)
         params.expires = new Date(expires)
-        console.log('Params: ', params)
       }
       this.app.context.res.setHeader('Set-Cookie', Cookie.serialize('ccmsToken', token, params))
     }
@@ -83,7 +82,7 @@ export const actions = {
   },
 
   // Fetch
-  async fetch ({ getters, state, commit, dispatch }, { endpoint = 'http://localhost:8000/api/users' } = {}) {
+  async fetch ({ getters, state, commit, dispatch }, username = 'admin', { endpoint = 'http://localhost:8000/api/user' } = {}) {
     // Fetch and update latest token
     await dispatch('fetchToken')
     // Skip if there is no token set
@@ -93,15 +92,9 @@ export const actions = {
 
     // Try to get user profile
     try {
-      const data = await this.$axios.$get(endpoint)
-      console.log(data)
-      if (data.success && data.success === false) {
-        console.log(data.message)
-        throw new Error(data.message)
-      }
+      const data = await this.$axios.$get(endpoint + '?username=' + username)
       commit('setUser', data)
     } catch (e) {
-      console.error(e)
       // Reset store
       await dispatch('reset')
     }
@@ -115,7 +108,7 @@ export const actions = {
       if (data.success) {
         await dispatch('updateToken', data['token'])
         // Fetch authenticated user
-        await dispatch('fetch')
+        await dispatch('fetch', data.user.username)
       } else {
         throw new Error(data.message)
       }
