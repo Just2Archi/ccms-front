@@ -30,12 +30,12 @@
             <td>{{ props.item.block }}</td>
             <td>{{ props.item.date }}</td>
             <td class="text-xs-center">
-              <v-btn @click.stop="dialogEdit = true" color="primary" flat icon>
+              <v-btn disabled @click.stop="dialogEdit = true" color="primary" flat icon>
                 <v-icon>edit</v-icon>
               </v-btn>
             </td>
             <td class="text-xs-center">
-              <v-btn @click.stop="dialogDelete = true" color="error"flat icon>
+              <v-btn disabled @click.stop="dialogDelete = true" color="error" flat icon>
                 <v-icon>delete</v-icon>
               </v-btn>
             </td>

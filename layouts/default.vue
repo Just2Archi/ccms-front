@@ -3,7 +3,7 @@
     <v-navigation-drawer :mini-variant.sync="miniVariant" v-model="drawer" fixed app>
       <v-list>
         <v-list-group>
-          <v-list-tile slot="item" router to="/categories">
+          <v-list-tile slot="item">
             <v-list-tile-action>
               <v-icon>apps</v-icon>
             </v-list-tile-action>
@@ -24,7 +24,7 @@
                   <v-icon>keyboard_arrow_down</v-icon>
                 </v-list-tile-action>
               </v-list-tile>
-              <v-list-tile v-for="subcategory in category.subcategories" router :to="subcategory.href">
+              <v-list-tile v-for="subcategory in category.subcategories" router exact :to="subcategory.href">
                 <v-list-tile-content>
                   <v-list-tile-title>-- {{ subcategory.title }}</v-list-tile-title>
                 </v-list-tile-content>
@@ -68,17 +68,19 @@
     </v-navigation-drawer>
     <v-toolbar fixed app>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>ClimateCMS</v-toolbar-title>
+      <v-toolbar-title>
+        <img class="logo" src="/logo.jpg" alt="ClimateCMS">
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu bottom center offset-y>
-        <v-avatar slot="activator" class="primary">
+        <v-avatar slot="activator" class="red darken-3">
           <span class="white--text headline" v-if="user && user.username">{{ user.username.charAt(0).toUpperCase() }}</span>
         </v-avatar>
         <v-list>
-          <v-list-tile>
+          <v-list-tile router to="/" exact>
             <v-list-tile-title>Profilis</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile v-if="user && user.admin">
+          <v-list-tile router to="/admin" exact v-if="user && user.admin">
             <v-list-tile-title>Administravimas</v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="logout()">
@@ -717,12 +719,15 @@
           return this.$store.state.user ? this.$store.state.user : null
         }
       }
-    },
-    mounted () {
-      console.log(this)
-      console.log(this.$axios)
-      console.log(this.$http)
-      console.log(this.axios)
     }
   }
 </script>
+
+<style media="screen">
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 80%;
+  height: auto;
+}
+</style>

@@ -4,14 +4,16 @@
       <v-card>
         <v-card-title class="headline">Prisijungimas</v-card-title>
         <v-card-text>
-          <v-form v-model="valid" ref="loginForm" lazy-validation>
+          <v-form @submit.prevent="login()" v-model="valid" ref="loginForm" lazy-validation>
             <v-text-field
+              prepend-icon="account_circle"
               label="Prisijungimo vardas"
               v-model="form.username"
               :rules="rules.username"
               required
             ></v-text-field>
             <v-text-field
+              prepend-icon="lock"
               label="Slaptažodis"
               type="password"
               v-model="form.password"
@@ -22,7 +24,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="login()" :disabled="loading" :loading="loading" raised>Prisijungti</v-btn>
+          <v-btn color="primary" type="submit" @click="login()" :disabled="!valid || loading" :loading="loading" raised>Prisijungti</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>

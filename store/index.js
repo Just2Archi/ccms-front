@@ -57,7 +57,9 @@ export const actions = {
         expires = date.setDate(date.getDate() + 1)
         params.expires = new Date(expires)
       }
-      this.app.context.res.setHeader('Set-Cookie', Cookie.serialize('ccmsToken', token, params))
+      this.$axios.defaults.headers.common['Authorization'] = token
+      this.app.context.res.setHeader('Authorization', Cookie.serialize('ccmsToken', token, params))
+      console.log('Axios: ', this.$axios.defaults.headers.common.Authorization)
     }
   },
 
@@ -73,6 +75,11 @@ export const actions = {
     if (token) {
       await dispatch('updateToken', token)
     }
+    if (process.browser) {
+      console.log('Browser token: ', token)
+    } else {
+      console.log('Server token: ', token)
+    }
   },
 
   // Reset
@@ -82,7 +89,7 @@ export const actions = {
   },
 
   // Fetch
-  async fetch ({ getters, state, commit, dispatch }, username = 'admin', { endpoint = 'http://localhost:8000/api/user' } = {}) {
+  async fetch ({ getters, state, commit, dispatch }, username = 'admin', { endpoint = 'http://192.168.19.223:8000/api/user' } = {}) {
     // Fetch and update latest token
     await dispatch('fetchToken')
     // Skip if there is no token set
@@ -101,7 +108,7 @@ export const actions = {
   },
 
   // Login
-  async login ({ dispatch }, { fields, endpoint = 'http://localhost:8000/api/login' } = {}) {
+  async login ({ dispatch }, { fields, endpoint = 'http://192.168.19.223:8000/api/login' } = {}) {
     try {
       // Send credentials to API
       let data = await this.$axios.$post(endpoint, fields)
